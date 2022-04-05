@@ -1,0 +1,5 @@
+/.env
+/conn
+/logs.log
+/requirements.txt
+/__pycache__
