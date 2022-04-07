@@ -4,10 +4,12 @@ from aiogram import types, Dispatcher
 from db.models import PlayerBalance
 from keyboars import get_spin_keyboard
 from filters.player_filter import IsPrivate
+from middlewares.throttling import rate_limit
 
 flags = {"throttling_key": "default"}
 
 
+@rate_limit("default")
 async def cmd_start(message: types.Message):
     db_session = message.bot.get('db')
 
@@ -51,10 +53,12 @@ async def cmd_start(message: types.Message):
         await message.answer(dedent(start_text).format(points=new_player.balance), reply_markup=get_spin_keyboard())
 
 
+@rate_limit("default")
 async def cmd_stop(message: types.Message):
     await message.answer("Клавиатура удалена. Вернуть клавиатуру и продолжить: /spin", reply_markup=types.ReplyKeyboardRemove())
 
 
+@rate_limit("default")
 async def cmd_help(message: types.Message):
     help_text = \
         "В казино доступно 4 элемента: BAR, виноград, лимон и цифра семь. Комбинаций, соответственно, 64. " \

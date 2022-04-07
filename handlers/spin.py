@@ -7,9 +7,11 @@ from aiogram import Dispatcher, types
 from keyboars import get_spin_keyboard
 from handlers.dice_check import get_combo_data
 from filters.player_filter import IsPrivate
+from middlewares.throttling import rate_limit
 from db.models import PlayerBalance
 
 
+@rate_limit("spin")
 async def cmd_spin(message: types.Message):
     db_session = message.bot.get('db')
 
